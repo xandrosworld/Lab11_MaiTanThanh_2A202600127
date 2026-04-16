@@ -7,7 +7,7 @@ import json
 
 from google import genai
 
-from core.config import get_model_name
+from core.config import get_gemini_api_keys, get_model_name, is_gemini_quota_error
 from core.utils import chat_with_agent
 
 
@@ -178,11 +178,25 @@ async def generate_ai_attacks() -> list:
     Returns:
         List of attack dicts with type, prompt, target, why_it_works
     """
-    client = genai.Client()
-    response = client.models.generate_content(
-        model=get_model_name(),
-        contents=RED_TEAM_PROMPT,
-    )
+    keys = get_gemini_api_keys()
+    clients = [genai.Client(api_key=key) for key in keys] if keys else [genai.Client()]
+    response = None
+    last_error = None
+    for client in clients:
+        try:
+            response = client.models.generate_content(
+                model=get_model_name(),
+                contents=RED_TEAM_PROMPT,
+            )
+            break
+        except Exception as exc:
+            last_error = exc
+            if is_gemini_quota_error(exc):
+                continue
+            raise
+
+    if response is None:
+        raise last_error if last_error is not None else RuntimeError("Could not generate AI attacks.")
 
     print("AI-Generated Attack Prompts (Aggressive):")
     print("=" * 60)

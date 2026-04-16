@@ -25,6 +25,10 @@ The final pipeline produced these results:
 - Bonus anomaly demo: `4/4` blocked
 - Audit log size: `36` entries
 
+In addition to the production pipeline, I also verified the lab's `TODO 9`
+NeMo Guardrails module locally after updating the backend configuration to
+`google_genai` and installing the optional NeMo dependencies.
+
 ## 1. Layer Analysis
 
 The table below shows which layer caught each attack first. I also list the other layers that could still reduce damage if the first layer failed.

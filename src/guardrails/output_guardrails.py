@@ -17,7 +17,7 @@ from google.adk.agents import llm_agent
 from google.adk import runners
 from google.adk.plugins import base_plugin
 
-from core.config import get_model_name
+from core.config import get_gemini_api_keys, get_model_name
 from core.utils import chat_with_agent
 
 
@@ -118,6 +118,23 @@ def _init_judge():
         judge_runner = runners.InMemoryRunner(
             agent=safety_judge_agent, app_name="safety_judge"
         )
+        judge_runner._codex_api_key_pool = get_gemini_api_keys()
+        judge_runner._codex_rebuild = _build_judge_runner
+        safety_judge_agent._codex_rebuild = _build_judge_runner
+
+
+def _build_judge_runner():
+    """Rebuild the judge runner after rotating to another Gemini key."""
+    agent = llm_agent.LlmAgent(
+        model=get_model_name(),
+        name="safety_judge",
+        instruction=SAFETY_JUDGE_INSTRUCTION,
+    )
+    runner = runners.InMemoryRunner(agent=agent, app_name="safety_judge")
+    runner._codex_api_key_pool = get_gemini_api_keys()
+    runner._codex_rebuild = _build_judge_runner
+    agent._codex_rebuild = _build_judge_runner
+    return agent, runner
 
 
 async def llm_safety_check(response_text: str) -> dict:

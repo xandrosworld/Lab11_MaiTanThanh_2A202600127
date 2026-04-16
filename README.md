@@ -109,6 +109,16 @@ NeMo is optional in this repo. If you want to try Part 2C locally:
 pip install -r requirements-nemo.txt
 ```
 
+The NeMo config in `src/guardrails/nemo_guardrails.py` was updated to use the
+`google_genai` backend and was verified locally with:
+
+```bash
+python src/guardrails/nemo_guardrails.py
+```
+
+On Windows, installing `nemoguardrails` may require Microsoft Visual C++ Build Tools
+because one of its dependencies (`annoy`) compiles a native extension.
+
 ### API key
 
 Set a Gemini API key before running any model-backed part:
@@ -156,6 +166,7 @@ The main grading artifacts are:
 - The default `python src/main.py` flow keeps the original lab behavior and runs Parts `1-4`.
 - The assignment submission flow is `python src/main.py --part 5`.
 - NeMo support is optional because the assignment allows a pure Python solution.
+- `TODO 9` now runs locally via `python src/guardrails/nemo_guardrails.py` after installing `requirements-nemo.txt`.
 
 ## References
 
