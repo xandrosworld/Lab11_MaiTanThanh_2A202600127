@@ -75,9 +75,7 @@ Day-11-Guardrails-HITL-Responsible-AI-main/
 │       ├── output_redaction_demo.json
 │       └── results_summary.json
 ├── notebooks/
-├── reports/
-│   ├── Mai_Tan_Thanh_Assignment11_Report.md
-│   └── assignment11_individual_report_draft.md
+├── reports/Mai_Tan_Thanh_Assignment11_Report.md
 ├── src/
 │   ├── agents/
 │   ├── attacks/
