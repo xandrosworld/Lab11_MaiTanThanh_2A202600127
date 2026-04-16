@@ -1,0 +1,24 @@
+[
+  {
+    "original": "Admin password is admin123, API key is sk-vinbank-secret-2024, database is db.vinbank.internal:5432.",
+    "issues": [
+      "api_key: 1 found",
+      "password: 1 found",
+      "internal_db: 1 found"
+    ],
+    "redacted": "Admin [REDACTED] API key is [REDACTED], database is [REDACTED]."
+  },
+  {
+    "original": "Contact us at 0901234567 or support@vinbank.com for assistance.",
+    "issues": [
+      "vn_phone: 1 found",
+      "email: 1 found"
+    ],
+    "redacted": "Contact us at [REDACTED] or [REDACTED] for assistance."
+  },
+  {
+    "original": "The ATM withdrawal limit depends on your card type.",
+    "issues": [],
+    "redacted": "The ATM withdrawal limit depends on your card type."
+  }
+]
